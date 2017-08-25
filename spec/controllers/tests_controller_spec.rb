@@ -14,6 +14,7 @@ RSpec.describe TasksController, :type => :controller do
     end
 
     it "loads all of the posts into @tasks" do
+      Task.all.destroy_all
       task1, task2 = Task.create(title: 'task description 1'), Task.create(title: 'task description 2')
       get :index
 
@@ -36,22 +37,22 @@ RSpec.describe TasksController, :type => :controller do
 
   describe "POST #create" do
     it "create with valid title" do
-      expect(Task.all.count).to eq(0)
+      task_count_before = Task.all.count
       valid_title = 'long task description'
 
       post :create, :task => {:title => valid_title}
 
-      expect(Task.all.count).to eq(1)
-      expect(assigns(:task)[:title]).to eq(valid_title)
+      expect(Task.all.count).to eq(task_count_before + 1)
+      expect(Task.last[:title]).to eq(valid_title)
     end
 
     it "create with invalid title" do
-      expect(Task.all.count).to eq(0)
+      task_count_before = Task.all.count
       invalid_title = 'too small'
 
       post :create, :task => {:title => invalid_title}
 
-      expect(Task.all.count).to eq(0)
+      expect(Task.all.count).to eq(task_count_before)
     end
   end
 

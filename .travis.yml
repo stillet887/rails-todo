@@ -15,5 +15,6 @@ env:
 before_script:
  - gem install bundler
  - bundler i
+ - createdb myapp_test
 script:
  - bundle exec rspec
