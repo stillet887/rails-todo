@@ -1,3 +1,199 @@
-// Place all the styles related to the Tasks controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+@import "font-awesome";
+@import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
+
+html, body {
+  height: 100%;
+}
+
+body {
+  background: url("https://umad.com/img/2016/6/foggy-forest-wallpaper-13858-14329-hd-wallpapers.jpg");
+  background-size: cover;
+  text-align: center;
+
+  h1 {
+    color: #607D8B;
+    text-align: center;
+    text-shadow: 0 0 13px white;
+    font-size: 40px;
+  }
+
+  a, td {
+    color: white;
+    text-decoration: none;
+  }
+
+  .btn-create, .btn-back {
+    margin-top: 20px;
+    font-size: 24px;
+    display: block;
+    vertical-align: middle;
+
+    &:hover {
+      color: lavender;
+      .fa {
+        font-size: 26px;
+      }
+    }
+  }
+
+  .btn-back {
+
+  }
+
+  table, form {
+    display: inline-block;
+  }
+
+  form {
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    padding: 45px 30px;
+
+    .btn-change {
+      input {
+        color: white;
+        font-size: 25px;
+        box-shadow: 0 0 5px 1px white;
+        transition: all 0.2s ease-out;
+
+        &:focus, &:hover {
+          box-shadow: 0 0 5px 2px rgba(255, 255, 255, 0.7);
+          padding: 5px 15px;
+          color: rgba(255, 255, 255, 0.7);
+        }
+      }
+    }
+
+    label {
+      color: white;
+      font-size: 20px;
+    }
+
+    input {
+      background: none;
+      border: none;
+      box-shadow: 0 0 10px white;
+      padding: 5px 10px;
+      margin: 10px;
+      color: white;
+      font-size: 16px;
+      text-align: center;
+
+      &:focus, &:hover {
+        box-shadow: 0 0 10px lavender;
+        border: none;
+        outline:none;
+      }
+    }
+  }
+
+  table {
+    margin: 0 30px;
+    border-collapse: collapse;
+
+    td:not(:first-child) {
+      padding-top:20px;
+      padding-bottom:20px;
+      padding-right:20px;
+    }
+
+    tr {
+      text-align: left;
+      &:nth-child(2n) {
+        box-shadow: 0 0 10px rgba(0,0,0,0.5);
+      }
+    }
+
+    .top-text {
+      vertical-align: top;
+    }
+
+    .title {
+      display: inline-block;
+      margin-right: 25px;
+      margin-top: 15px;
+      margin-left: 10px;
+      text-align: left;
+      font-size: 25px;
+      word-break: break-all;
+    }
+
+    .completed {
+      a, td {
+        color: #887e75;
+        text-decoration: line-through;
+
+        .fa:hover {
+          color: lightgray;
+        }
+      }
+    }
+  }
+
+  .fa {
+    font-size: 25px;
+
+    &:hover {
+      color: lavender;
+    }
+  }
+}
+
+h1.welcome {
+  color: lavender;
+  font-weight: normal;
+}
+
+.btn-welcome {
+  position: relative;
+  width: 400px;
+  margin: auto;
+  margin-top: 100px;
+  text-align: center;
+  display: block;
+  .spinner {
+    background: url("https://www.booklot.ru/templates/newimg/original/32b8778748ed56d77fc4a8513d9c7540.png");
+    background-size: 100%;
+    filter: blur(2px) invert(100%);
+    height: 400px;
+    width: 400px;
+    transform: scale(1, -1);
+    margin: auto;
+    opacity: 0.5;
+    transition: opacity 1s ease-out;
+
+    animation-name: spin;
+    animation-duration: 20s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+  }
+
+  .text {
+    font-size: 100px;
+    text-shadow: 0 0 13px white;
+    color: lavender;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: color 1s ease-out;
+  }
+
+  &:hover {
+    .spinner {
+      opacity: 1;
+    }
+    .text {
+      color: #9f9fb3;
+    }
+  }
+}
+
+@keyframes spin {
+  from {
+    transform:rotate(0deg);
+  }
+
+  to {
+    transform:rotate(360deg);
+  }
+}

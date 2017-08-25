@@ -2,4 +2,7 @@
 
 <%= render 'form' %>
 
-<%= link_to 'Back', tasks_path %>
+<%= link_to tasks_path, class: "btn btn-back" do %>
+    <%= fa_icon "caret-left" %>
+    Back
+<% end %>

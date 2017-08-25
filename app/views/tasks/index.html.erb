@@ -2,15 +2,23 @@
 
 <table>
   <% @tasks.each do |task| %>
-      <tr>
-        <td><%= task.title %></td>
-        <td><%= task.status %></td>
-        <td><%= link_to 'Edit', edit_task_path(task) %></td>
-        <td><%= link_to 'Destroy', task_path(task),
-                        method: :delete,
-                        data: { confirm: 'Are you sure?' } %></td>
+      <tr class="<%= 'completed' if task.status %>">
+        <td class="title"><%= task.title %></td>
+        <td class="top-text">
+          <%= link_to edit_task_path(task) do %>
+              <%= fa_icon "pencil-square-o" %>
+          <% end %>
+        </td>
+
+        <td class="top-text"><%= link_to task_path(task), method: :delete do %>
+              <%= fa_icon "times" %>
+        <% end %>
+        </td>
       </tr>
   <% end %>
 </table>
 
-<%= link_to 'Create new task', new_task_url %>
+<%= link_to new_task_url, class: "btn btn-create" do %>
+    <%= fa_icon "plus" %>
+    Create new task
+<% end %>
