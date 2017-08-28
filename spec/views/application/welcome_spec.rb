@@ -4,8 +4,8 @@ describe "application/welcome" do
   it "displays welcome message" do
     render
 
-    rendered.should =~ /This is application for creating task list/
-    rendered.should =~ /Write down all your important things there, so as not to forget/
-    rendered.should =~ /Start/
+    expect(rendered).to match(/This is application for creating task list/)
+    expect(rendered).to match(/Write down all your important things there, so as not to forget/)
+    expect(rendered).to match(/Start/)
   end
 end

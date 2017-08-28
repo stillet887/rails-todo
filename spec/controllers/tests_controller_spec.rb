@@ -1,6 +1,7 @@
 require "rails_helper"
 
 RSpec.describe TasksController, :type => :controller do
+  include FactoryGirl::Syntax::Methods
   describe "GET #index" do
     it "responds successfully with an HTTP 200 status code" do
       get :index
@@ -15,10 +16,10 @@ RSpec.describe TasksController, :type => :controller do
 
     it "loads all of the posts into @tasks" do
       Task.all.destroy_all
-      task1, task2 = Task.create(title: 'task description 1'), Task.create(title: 'task description 2')
+      tasks = create_list(:task, 2)
       get :index
 
-      expect(assigns(:tasks)).to match_array([task1, task2])
+      expect(assigns(:tasks)).to match_array(tasks)
     end
   end
 
@@ -38,9 +39,9 @@ RSpec.describe TasksController, :type => :controller do
   describe "POST #create" do
     it "create with valid title" do
       task_count_before = Task.all.count
-      valid_title = 'long task description'
+      valid_title = Faker::ElderScrolls.dragon
 
-      post :create, :task => {:title => valid_title}
+      post :create, params: {task: {title: valid_title}}
 
       expect(Task.all.count).to eq(task_count_before + 1)
       expect(Task.last[:title]).to eq(valid_title)
@@ -48,9 +49,9 @@ RSpec.describe TasksController, :type => :controller do
 
     it "create with invalid title" do
       task_count_before = Task.all.count
-      invalid_title = 'too small'
+      invalid_title = Faker::ElderScrolls.dragon[0..3]
 
-      post :create, :task => {:title => invalid_title}
+      post :create, params: {task: {title: invalid_title}}
 
       expect(Task.all.count).to eq(task_count_before)
     end
@@ -58,48 +59,49 @@ RSpec.describe TasksController, :type => :controller do
 
   describe "GET #edit" do
     it "responds successfully with an HTTP 200 status code" do
-      task = Task.create(title: 'task description')
+      task = create(:task)
 
-      get :edit, :id => task[:id]
+      get :edit, params: {id: task[:id]}
       expect(response).to be_success
       expect(response).to have_http_status(200)
     end
 
     it "renders the index template" do
-      task = Task.create(title: 'task description')
+      task = create(:task)
 
-      get :edit, :id => task[:id]
+      get :edit, params: {id: task[:id]}
       expect(response).to render_template("edit")
     end
   end
 
   describe "PUT #update" do
     it "update with valid title" do
-      task = Task.create(title: 'task description', status: false)
-      new_valid_title = 'new task description'
+      task = create(:task)
+      new_valid_title = Faker::ElderScrolls.dragon
 
-      put :update, :id => task[:id], :task => {:title => new_valid_title, :status => true}
+      put :update, params: {id: task[:id], task: {title: new_valid_title, status: true}}
       task.reload
 
       expect(task[:title]).to eq(new_valid_title)
     end
 
     it "update with invalid title" do
-      task = Task.create(title: 'old description', status: false)
-      new_invalid_title = 'too small'
+      old_title = Faker::ElderScrolls.dragon
+      task = create(:task, title: old_title)
+      new_invalid_title = Faker::ElderScrolls.dragon[0..3]
 
-      put :update, :id => task[:id], :task => {:title => new_invalid_title, :status => true}
+      put :update, params: {id: task[:id], task: {title: new_invalid_title, status: true}}
       task.reload
 
-      expect(task[:title]).to eq('old description')
+      expect(task[:title]).to eq(old_title)
     end
   end
 
   describe "DELETE #destroy" do
     it "delete task" do
-      task = Task.create(title: 'task description', status: false)
+      task = create(:task)
 
-      delete :destroy, :id => task[:id]
+      delete :destroy, params: {id: task[:id]}
       expect(Task.find_by(id: task[:id])).to eq(nil)
     end
   end
