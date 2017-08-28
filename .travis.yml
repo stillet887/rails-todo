@@ -1,23 +1,14 @@
 language: ruby
 rvm:
   - 2.2
-env:
-  - "TEST_GROUP=1"
-  - "TEST_GROUP=2"
-  - "TEST_GROUP=3"
-  - "TEST_GROUP=4"
-  - "TEST_GROUP=5"
-  - "TEST_GROUP=6"
-  - "TEST_GROUP=7"
-  - "TEST_GROUP=8"
-  - "TEST_GROUP=9"
-  - "TEST_GROUP=10"
 before_script:
  - gem install bundler
  - bundler i
  - createdb myapp_test
 script:
  - bundle exec rspec
+after_deploy:
+ - git reset --hard HEAD
 deploy:
   provider: heroku
   api_key:
