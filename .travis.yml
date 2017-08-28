@@ -18,3 +18,11 @@ before_script:
  - createdb myapp_test
 script:
  - bundle exec rspec
+deploy:
+  provider: heroku
+  api_key:
+    secure: "bb325b2a-3bcd-4935-ae6f-b30e76f70559"
+  app: afternoon-beach-16255
+  run: "rake db:migrate"
+  on:
+      branch: master
